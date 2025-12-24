@@ -261,6 +261,11 @@ metadata:
     app.kubernetes.io/name: easyscale
     app.kubernetes.io/component: controller
 rules:
+  # Read namespaces (for API health check)
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list"]
+
   # Read Deployments and StatefulSets
   - apiGroups: ["apps"]
     resources: ["deployments", "statefulsets"]

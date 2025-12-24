@@ -1,5 +1,3 @@
-# EasyScale
-
 <div align="center">
   <a href="https://nextjs.org">
     <picture>
@@ -8,9 +6,7 @@
     </picture>
   </a>
   <h1>EasyScale</h1>
-
 </div>
-
 
 > Simple Kubernetes HPA scaling manager with time-based rules
 

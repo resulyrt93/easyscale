@@ -2,7 +2,7 @@
 name = "easyscale"
 version = "0.1.0"
 description = "A simple Kubernetes HPA scaling manager with time-based rules"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["resulyrt93@gmail.com"]
 readme = "README.md"
 license = "MIT"
 homepage = "https://github.com/yourusername/easyscale"

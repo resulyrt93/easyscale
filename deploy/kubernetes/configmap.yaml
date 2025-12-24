@@ -44,19 +44,22 @@ data:
       schedule:
         - name: "Business hours"
           days: [Monday, Tuesday, Wednesday, Thursday, Friday]
-          time_ranges:
-            - start: "09:00"
-              end: "18:00"
+          timeStart: "09:00"
+          timeEnd: "18:00"
           replicas: 10
           priority: 10
 
-        - name: "After hours"
+        - name: "After hours weekday"
           days: [Monday, Tuesday, Wednesday, Thursday, Friday]
-          time_ranges:
-            - start: "18:00"
-              end: "23:59"
-            - start: "00:00"
-              end: "09:00"
+          timeStart: "18:00"
+          timeEnd: "23:59"
+          replicas: 3
+          priority: 5
+
+        - name: "After hours night"
+          days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+          timeStart: "00:00"
+          timeEnd: "09:00"
           replicas: 3
           priority: 5
 

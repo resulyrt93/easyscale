@@ -127,7 +127,7 @@ def main():
     # Setup logging
     setup_logging(
         level=args.log_level,
-        format_type=args.log_format,
+        format_json=(args.log_format == "json"),
     )
 
     logger.info("=" * 60)

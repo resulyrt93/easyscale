@@ -28,6 +28,7 @@ class K8sClient:
         self.in_cluster = in_cluster
         self._apps_v1_api: Optional[client.AppsV1Api] = None
         self._core_v1_api: Optional[client.CoreV1Api] = None
+        self._custom_objects_api: Optional[client.CustomObjectsApi] = None
         self._initialize()
 
     def _initialize(self) -> None:
@@ -42,6 +43,7 @@ class K8sClient:
 
             self._apps_v1_api = client.AppsV1Api()
             self._core_v1_api = client.CoreV1Api()
+            self._custom_objects_api = client.CustomObjectsApi()
             logger.info("Kubernetes client initialized successfully")
 
         except Exception as e:
@@ -60,6 +62,13 @@ class K8sClient:
         if self._core_v1_api is None:
             raise K8sClientError("CoreV1Api not initialized")
         return self._core_v1_api
+
+    @property
+    def custom_objects_api(self) -> client.CustomObjectsApi:
+        """Get CustomObjectsApi client."""
+        if self._custom_objects_api is None:
+            raise K8sClientError("CustomObjectsApi not initialized")
+        return self._custom_objects_api
 
     def test_connection(self) -> bool:
         """

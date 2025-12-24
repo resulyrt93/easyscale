@@ -9,6 +9,7 @@ from typing import Optional
 
 import pytz
 
+from easyscale.config.crd_loader import CRDLoader
 from easyscale.config.loader import ConfigLoader
 from easyscale.config.models import ScalingRule
 from easyscale.config.validator import ConfigValidator
@@ -107,6 +108,48 @@ class EasyScaleDaemon:
 
         except Exception as e:
             logger.error(f"Error loading rules from directory: {e}", exc_info=True)
+            return 0
+
+    def load_rules_from_crds(self, namespace: Optional[str] = None) -> int:
+        """
+        Load scaling rules from Kubernetes CRDs.
+
+        Args:
+            namespace: Optional namespace to filter rules. If None, loads from all namespaces.
+
+        Returns:
+            Number of rules loaded successfully
+        """
+        try:
+            crd_loader = CRDLoader(self.k8s_client)
+            rules = crd_loader.load_all_scaling_rules(namespace=namespace)
+            loaded_count = 0
+
+            for rule in rules:
+                # Validate rule
+                validation = ConfigValidator.validate(rule)
+                if not validation.valid:
+                    logger.error(
+                        f"Invalid CRD rule '{rule.metadata.name}' in namespace '{rule.metadata.namespace}': {validation.errors}"
+                    )
+                    continue
+
+                if validation.warnings:
+                    logger.warning(
+                        f"CRD rule '{rule.metadata.name}' in namespace '{rule.metadata.namespace}' has warnings: {validation.warnings}"
+                    )
+
+                # Add to managed rules
+                rule_key = self._get_rule_key(rule)
+                self.rules[rule_key] = rule
+                loaded_count += 1
+                logger.info(f"Loaded CRD rule: {rule.metadata.name} (namespace: {rule.metadata.namespace})")
+
+            logger.info(f"Successfully loaded {loaded_count}/{len(rules)} CRD rules")
+            return loaded_count
+
+        except Exception as e:
+            logger.error(f"Error loading rules from CRDs: {e}", exc_info=True)
             return 0
 
     def add_rule(self, rule: ScalingRule) -> bool:
@@ -210,6 +253,9 @@ class EasyScaleDaemon:
 
     def _run_cycle(self) -> None:
         """Run one evaluation cycle for all rules."""
+        # Reload CRDs every cycle to pick up new/modified rules
+        self.load_rules_from_crds()
+
         if not self.rules:
             logger.debug("No rules to evaluate")
             return

@@ -1,0 +1,8 @@
+# Sphinx build artifacts
+_build/
+_templates/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class

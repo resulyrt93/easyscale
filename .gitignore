@@ -70,3 +70,7 @@ poetry.lock
 
 # Ruff
 .ruff_cache/
+
+
+# claude
+.claude/*

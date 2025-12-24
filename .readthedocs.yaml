@@ -1,21 +1,27 @@
-# Read the Docs configuration file
+# Read the Docs configuration file for Sphinx
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 
 # Required
 version: 2
 
-# Set the OS, Python version, and other tools you might need
+# Set the OS, Python version and other tools you might need
 build:
   os: ubuntu-24.04
   tools:
-    nodejs: "22"
+    python: "3.12"
 
-  commands:
-    # Install Docusaurus dependencies
-    - cd docs/ && npm install
-    # Build the site
-    - cd docs/ && npm run build
-    # Copy generated files into Read the Docs directory
-    - mkdir --parents $READTHEDOCS_OUTPUT/html/
-    - cp --recursive docs/build/* $READTHEDOCS_OUTPUT/html/
+# Build documentation with Sphinx
+sphinx:
+  configuration: docs/conf.py
+  fail_on_warning: false
+
+# Optionally build your docs in additional formats such as PDF
+formats:
+  - pdf
+  - epub
+
+# Python packages required to build docs
+python:
+  install:
+    - requirements: docs/requirements.txt
         

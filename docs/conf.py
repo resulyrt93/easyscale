@@ -73,7 +73,7 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets)
 html_context = {
     'display_github': True,
-    'github_user': 'yourusername',
+    'github_user': 'resulyrt93',
     'github_repo': 'easyscale',
     'github_version': 'main',
     'conf_py_path': '/docs/',

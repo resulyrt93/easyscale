@@ -1,0 +1,130 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: easyscale-controller
+  namespace: easyscale-system
+  labels:
+    app.kubernetes.io/name: easyscale
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/version: "0.1.0"
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate  # Only one instance should run at a time
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: easyscale
+      app.kubernetes.io/component: controller
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: easyscale
+        app.kubernetes.io/component: controller
+        app.kubernetes.io/version: "0.1.0"
+    spec:
+      serviceAccountName: easyscale
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+
+      containers:
+        - name: controller
+          image: resulyrt93/easyscale:latest
+          imagePullPolicy: Always
+
+          # Command override - point to rules directory
+          command: ["python", "-m", "easyscale"]
+          args:
+            - "--rules-dir=/etc/easyscale/rules"
+            - "--check-interval=60"
+            - "--cooldown=60"
+            - "--log-level=INFO"
+            - "--log-format=json"
+
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            capabilities:
+              drop:
+                - ALL
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+
+          # Volume mounts for rules
+          volumeMounts:
+            - name: rules
+              mountPath: /etc/easyscale/rules
+              readOnly: true
+            - name: tmp
+              mountPath: /tmp
+
+          # Health probes
+          livenessProbe:
+            exec:
+              command:
+                - python
+                - -c
+                - "import sys; sys.exit(0)"
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+
+          readinessProbe:
+            exec:
+              command:
+                - python
+                - -c
+                - "import sys; sys.exit(0)"
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: PYTHONDONTWRITEBYTECODE
+              value: "1"
+            - name: TZ
+              value: "UTC"
+
+      volumes:
+        - name: rules
+          configMap:
+            name: easyscale-rules
+            optional: true
+        - name: tmp
+          emptyDir: {}
+
+      # Scheduling preferences
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: easyscale
+                    app.kubernetes.io/component: controller
+                topologyKey: kubernetes.io/hostname
+
+      # Tolerate control plane taints if needed
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule

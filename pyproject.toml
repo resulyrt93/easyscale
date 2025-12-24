@@ -5,7 +5,7 @@ description = "A simple Kubernetes HPA scaling manager with time-based rules"
 authors = ["resulyrt93@gmail.com"]
 readme = "README.md"
 license = "MIT"
-homepage = "https://github.com/yourusername/easyscale"
+homepage = "https://github.com/resulyrt93/easyscale"
 keywords = ["kubernetes", "scaling", "hpa", "devops"]
 
 [tool.poetry.dependencies]

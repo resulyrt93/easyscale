@@ -17,7 +17,7 @@ Before you begin, ensure you have:
 Deploy EasyScale to your cluster:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/yourusername/easyscale/main/deploy/kubernetes/install.yaml
+kubectl apply -f https://raw.githubusercontent.com/resulyrt93/easyscale/main/deploy/kubernetes/install.yaml
 ```
 
 This will create:
@@ -144,7 +144,7 @@ For local development and testing:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/easyscale.git
+git clone https://github.com/resulyrt93/easyscale.git
 cd easyscale
 
 # Create conda environment

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: easyscale-system
+  labels:
+    app.kubernetes.io/name: easyscale
+    app.kubernetes.io/component: system

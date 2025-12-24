@@ -87,9 +87,9 @@ Reduce capacity during weekends when traffic is lower.
 ## Getting Help
 
 - 📖 **Documentation**: You're reading it!
-- 🐛 **Report Issues**: [GitHub Issues](https://github.com/yourusername/easyscale/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/easyscale/discussions)
-- 📦 **Source Code**: [GitHub Repository](https://github.com/yourusername/easyscale)
+- 🐛 **Report Issues**: [GitHub Issues](https://github.com/resulyrt93/easyscale/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/resulyrt93/easyscale/discussions)
+- 📦 **Source Code**: [GitHub Repository](https://github.com/resulyrt93/easyscale)
 
 ## Quick Links
 
@@ -135,7 +135,7 @@ Real-world use cases and examples
 
 ## License
 
-EasyScale is licensed under the MIT License. See the [LICENSE](https://github.com/yourusername/easyscale/blob/main/LICENSE) file for details.
+EasyScale is licensed under the MIT License. See the [LICENSE](https://github.com/resulyrt93/easyscale/blob/main/LICENSE) file for details.
 
 ---
 

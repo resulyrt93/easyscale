@@ -8,8 +8,8 @@
   <h1>EasyScale</h1>
   <p>
     <a href="https://easyscale.readthedocs.io"><img src="https://readthedocs.org/projects/easyscale/badge/?version=latest" alt="Documentation Status"></a>
-    <a href="https://github.com/yourusername/easyscale/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
-    <a href="https://github.com/yourusername/easyscale"><img src="https://img.shields.io/badge/python-3.12-blue.svg" alt="Python 3.12"></a>
+    <a href="https://github.com/resulyrt93/easyscale/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+    <a href="https://github.com/resulyrt93/easyscale"><img src="https://img.shields.io/badge/python-3.12-blue.svg" alt="Python 3.12"></a>
   </p>
 </div>
 
@@ -33,7 +33,7 @@ EasyScale is a lightweight, easy-to-configure tool for managing Kubernetes workl
 
 ```bash
 # Install EasyScale daemon to your cluster
-kubectl apply -f https://raw.githubusercontent.com/yourusername/easyscale/main/deploy/kubernetes/install.yaml
+kubectl apply -f https://raw.githubusercontent.com/resulyrt93/easyscale/main/deploy/kubernetes/install.yaml
 ```
 
 ### Basic Example
@@ -99,7 +99,7 @@ See the [Architecture Documentation](https://easyscale.readthedocs.io/en/latest/
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/easyscale.git
+git clone https://github.com/resulyrt93/easyscale.git
 cd easyscale
 
 # Setup environment
@@ -148,8 +148,8 @@ MIT License - see [LICENSE](LICENSE) for details.
 ## 📞 Support
 
 - 📖 [Documentation](https://easyscale.readthedocs.io)
-- 🐛 [Issue Tracker](https://github.com/yourusername/easyscale/issues)
-- 💬 [Discussions](https://github.com/yourusername/easyscale/discussions)
+- 🐛 [Issue Tracker](https://github.com/resulyrt93/easyscale/issues)
+- 💬 [Discussions](https://github.com/resulyrt93/easyscale/discussions)
 
 ---
 

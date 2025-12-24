@@ -1,0 +1,18 @@
+apiVersion: easyscale.io/v1
+kind: ScalingRule
+metadata:
+  name: weekend-scale-down
+  namespace: default
+spec:
+  target:
+    kind: Deployment
+    name: my-api-service
+    namespace: default
+
+  schedule:
+    - name: "Weekend scale down"
+      days: [Saturday, Sunday]
+      replicas: 2
+
+  default:
+    replicas: 5

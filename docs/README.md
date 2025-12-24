@@ -35,8 +35,8 @@ EasyScale is a lightweight, easy-to-configure tool for managing Kubernetes workl
 
 ## Getting Help
 
-- Report issues: [GitHub Issues](https://github.com/yourusername/easyscale/issues)
-- Discussions: [GitHub Discussions](https://github.com/yourusername/easyscale/discussions)
+- Report issues: [GitHub Issues](https://github.com/resulyrt93/easyscale/issues)
+- Discussions: [GitHub Discussions](https://github.com/resulyrt93/easyscale/discussions)
 - Documentation: This site
 
 ## License

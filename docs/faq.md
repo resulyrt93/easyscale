@@ -376,13 +376,13 @@ Minimal load:
 ### How can I contribute?
 
 We welcome contributions! See:
-- [GitHub Repository](https://github.com/yourusername/easyscale)
-- [Contributing Guide](https://github.com/yourusername/easyscale/blob/main/CONTRIBUTING.md)
-- [Issue Tracker](https://github.com/yourusername/easyscale/issues)
+- [GitHub Repository](https://github.com/resulyrt93/easyscale)
+- [Contributing Guide](https://github.com/resulyrt93/easyscale/blob/main/CONTRIBUTING.md)
+- [Issue Tracker](https://github.com/resulyrt93/easyscale/issues)
 
 ### I found a bug, what should I do?
 
-1. Check if it's a known issue in [GitHub Issues](https://github.com/yourusername/easyscale/issues)
+1. Check if it's a known issue in [GitHub Issues](https://github.com/resulyrt93/easyscale/issues)
 2. If not, create a new issue with:
    - EasyScale version
    - Kubernetes version
@@ -392,7 +392,7 @@ We welcome contributions! See:
 
 ### I have a feature request
 
-Great! Open a [GitHub Discussion](https://github.com/yourusername/easyscale/discussions) or [Issue](https://github.com/yourusername/easyscale/issues) describing:
+Great! Open a [GitHub Discussion](https://github.com/resulyrt93/easyscale/discussions) or [Issue](https://github.com/resulyrt93/easyscale/issues) describing:
 - The feature
 - Use case
 - Why it would be valuable
@@ -401,5 +401,5 @@ Great! Open a [GitHub Discussion](https://github.com/yourusername/easyscale/disc
 ## Still Have Questions?
 
 - 📖 [Documentation](README.md)
-- 💬 [GitHub Discussions](https://github.com/yourusername/easyscale/discussions)
-- 🐛 [Issue Tracker](https://github.com/yourusername/easyscale/issues)
+- 💬 [GitHub Discussions](https://github.com/resulyrt93/easyscale/discussions)
+- 🐛 [Issue Tracker](https://github.com/resulyrt93/easyscale/issues)

@@ -1,0 +1,126 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: easyscale-rules
+  namespace: easyscale-system
+  labels:
+    app.kubernetes.io/name: easyscale
+    app.kubernetes.io/component: rules
+data:
+  # Example 1: Weekend scale down
+  weekend-scale.yaml: |
+    apiVersion: easyscale.io/v1
+    kind: ScalingRule
+    metadata:
+      name: weekend-scale-down
+      namespace: default
+    spec:
+      target:
+        kind: Deployment
+        name: my-api-service
+        namespace: default
+
+      schedule:
+        - name: "Weekend scale down"
+          days: [Saturday, Sunday]
+          replicas: 2
+
+      default:
+        replicas: 5
+
+  # Example 2: Business hours scaling
+  business-hours.yaml: |
+    apiVersion: easyscale.io/v1
+    kind: ScalingRule
+    metadata:
+      name: business-hours-scaling
+      namespace: default
+    spec:
+      target:
+        kind: Deployment
+        name: my-web-app
+        namespace: default
+
+      schedule:
+        - name: "Business hours"
+          days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+          time_ranges:
+            - start: "09:00"
+              end: "18:00"
+          replicas: 10
+          priority: 10
+
+        - name: "After hours"
+          days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+          time_ranges:
+            - start: "18:00"
+              end: "23:59"
+            - start: "00:00"
+              end: "09:00"
+          replicas: 3
+          priority: 5
+
+      default:
+        replicas: 2
+
+      timezone: "America/New_York"
+
+  # Example 3: Special event scaling
+  black-friday.yaml: |
+    apiVersion: easyscale.io/v1
+    kind: ScalingRule
+    metadata:
+      name: black-friday-scaling
+      namespace: production
+    spec:
+      target:
+        kind: Deployment
+        name: checkout-service
+        namespace: production
+
+      schedule:
+        - name: "Black Friday 2025"
+          dates:
+            - "2025-11-28"
+            - "2025-11-29"
+          replicas: 50
+          priority: 100
+
+        - name: "Cyber Monday 2025"
+          dates:
+            - "2025-12-01"
+          replicas: 40
+          priority: 100
+
+      default:
+        replicas: 10
+
+      limits:
+        min_replicas: 5
+        max_replicas: 100
+
+  # Example 4: Development environment auto-shutdown
+  dev-auto-shutdown.yaml: |
+    apiVersion: easyscale.io/v1
+    kind: ScalingRule
+    metadata:
+      name: dev-auto-shutdown
+      namespace: development
+    spec:
+      target:
+        kind: Deployment
+        name: dev-api
+        namespace: development
+
+      schedule:
+        - name: "Working hours"
+          days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+          time_ranges:
+            - start: "08:00"
+              end: "20:00"
+          replicas: 3
+
+      default:
+        replicas: 0  # Shutdown outside working hours
+
+      timezone: "UTC"

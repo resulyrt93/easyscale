@@ -19,7 +19,7 @@ This guide covers different ways to install EasyScale in your Kubernetes cluster
 The simplest way to install EasyScale:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/yourusername/easyscale/main/deploy/kubernetes/install.yaml
+kubectl apply -f https://raw.githubusercontent.com/resulyrt93/easyscale/main/deploy/kubernetes/install.yaml
 ```
 
 This creates:
@@ -36,7 +36,7 @@ Install using Helm chart:
 
 ```bash
 # Add EasyScale Helm repository
-helm repo add easyscale https://yourusername.github.io/easyscale
+helm repo add easyscale https://resulyrt93.github.io/easyscale
 helm repo update
 
 # Install EasyScale
@@ -143,7 +143,7 @@ EasyScale daemon starting (check_interval=60s, dry_run=False)
 ### Using kubectl
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/yourusername/easyscale/main/deploy/kubernetes/install.yaml
+kubectl apply -f https://raw.githubusercontent.com/resulyrt93/easyscale/main/deploy/kubernetes/install.yaml
 ```
 
 ### Using Helm
@@ -167,7 +167,7 @@ helm upgrade easyscale easyscale/easyscale \
 ### Using kubectl
 
 ```bash
-kubectl delete -f https://raw.githubusercontent.com/yourusername/easyscale/main/deploy/kubernetes/install.yaml
+kubectl delete -f https://raw.githubusercontent.com/resulyrt93/easyscale/main/deploy/kubernetes/install.yaml
 ```
 
 This removes all EasyScale components. Your scaling rules will be deleted as well.

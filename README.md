@@ -27,11 +27,8 @@ EasyScale is a lightweight, easy-to-configure tool for managing Kubernetes workl
 ### Installation
 
 ```bash
-# Using pip
-pip install easyscale
-
-# Using poetry
-poetry add easyscale
+# Install EasyScale daemon to your cluster
+kubectl apply -f https://raw.githubusercontent.com/yourusername/easyscale/main/deploy/kubernetes/install.yaml
 ```
 
 ### Basic Example
@@ -43,6 +40,7 @@ apiVersion: easyscale.io/v1
 kind: ScalingRule
 metadata:
   name: weekend-scale-down
+  namespace: default
 spec:
   target:
     kind: Deployment
@@ -58,17 +56,17 @@ spec:
     replicas: 5
 ```
 
-Validate and test:
+Apply the configuration:
 
 ```bash
-# Validate configuration
-easyscale validate weekend-scale.yaml
+# Apply scaling rule to your cluster
+kubectl apply -f weekend-scale.yaml
 
-# Dry-run to see what would happen
-easyscale dry-run weekend-scale.yaml
+# View scaling rules
+kubectl get scalingrules
 
-# Run the controller
-easyscale run --config weekend-scale.yaml
+# Check EasyScale daemon logs
+kubectl logs -n easyscale-system deployment/easyscale-controller
 ```
 
 ## 📖 Documentation
@@ -160,13 +158,20 @@ schedule:
 
 ## 🏗️ Architecture
 
-EasyScale consists of:
+EasyScale is a Kubernetes-native daemon that consists of:
 
-1. **Configuration Models** - Pydantic-based validation
-2. **Config Loader** - YAML/ConfigMap loading
-3. **Scheduler** - Rule evaluation engine
-4. **Controller** - Main control loop
-5. **K8s Client** - Kubernetes API integration
+1. **Configuration Models** - Pydantic-based ScalingRule validation
+2. **Rule Evaluation Engine** - Time-based scheduling logic
+3. **Controller Daemon** - Watches ScalingRules and executes scaling
+4. **K8s Integration** - Scales Deployments and StatefulSets
+5. **RBAC** - Minimal permissions (read pods, scale resources)
+
+**How it works:**
+1. User creates a ScalingRule YAML and applies it: `kubectl apply -f rule.yaml`
+2. EasyScale daemon watches for ScalingRule resources
+3. Every minute, daemon evaluates all rules against current time
+4. If desired replicas differ from current, daemon scales the resource
+5. All operations are logged and visible in daemon logs
 
 ## 🧪 Development
 
@@ -177,59 +182,83 @@ EasyScale consists of:
 git clone https://github.com/yourusername/easyscale.git
 cd easyscale
 
+# Create conda environment
+conda create -n easyscale python=3.12
+conda activate easyscale
+
 # Install dependencies
 poetry install
 
 # Run tests
-poetry run pytest
+pytest
 
 # Run linter
-poetry run ruff check .
+ruff check .
 
 # Format code
-poetry run ruff format .
+ruff format .
 ```
 
 ### Running Tests
 
 ```bash
-# All tests
-poetry run pytest
+# All tests (129 tests, 92% coverage)
+pytest
 
-# With coverage
-poetry run pytest --cov=easyscale
+# With coverage report
+pytest --cov=easyscale --cov-report=html
 
 # Specific test file
-poetry run pytest tests/test_config/test_models.py
+pytest tests/test_config/test_models.py
 
 # Verbose output
-poetry run pytest -v
+pytest -v
+```
+
+### Testing Locally
+
+```bash
+# Build Docker image
+docker build -t easyscale:dev .
+
+# Deploy to local cluster (minikube/kind)
+kubectl apply -f deploy/kubernetes/
+
+# Watch logs
+kubectl logs -f -n easyscale-system deployment/easyscale-controller
 ```
 
 ## 🚢 Deployment
 
-### Kubernetes Deployment
+### Install to Kubernetes
 
 ```bash
-# Apply RBAC and deployment
-kubectl apply -f deploy/kubernetes/
+# Install EasyScale daemon
+kubectl apply -f deploy/kubernetes/install.yaml
 
-# Using Helm
-helm install easyscale deploy/helm/easyscale
+# Or using Helm
+helm repo add easyscale https://yourusername.github.io/easyscale
+helm install easyscale easyscale/easyscale
 ```
 
-### Configuration via ConfigMap
+### Uninstall
 
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: easyscale-config
-data:
-  rule1.yaml: |
-    apiVersion: easyscale.io/v1
-    kind: ScalingRule
-    # ... your config here
+```bash
+# Remove EasyScale
+kubectl delete -f deploy/kubernetes/install.yaml
+
+# Or with Helm
+helm uninstall easyscale
+```
+
+### Multiple Scaling Rules
+
+```bash
+# Apply multiple rules
+kubectl apply -f scaling-rules/
+
+# Each file is a separate ScalingRule
+# The daemon automatically detects and applies all rules
 ```
 
 ## 📋 Roadmap

@@ -1,0 +1,22 @@
+apiVersion: easyscale.io/v1
+kind: ScalingRule
+metadata:
+  name: simple-time-based-scaling
+spec:
+  target:
+    kind: Deployment
+    name: api-service
+    namespace: default
+
+  schedule:
+    # Scale up during business hours
+    - name: "Business hours"
+      days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+      timeStart: "08:00"
+      timeEnd: "20:00"
+      replicas: 5
+      timezone: "UTC"
+
+  # Scale down outside business hours
+  default:
+    replicas: 2

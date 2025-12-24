@@ -1,0 +1,46 @@
+apiVersion: easyscale.io/v1
+kind: ScalingRule
+metadata:
+  name: ml-model-complex-schedule
+  labels:
+    app: ml-model-api
+    environment: production
+    team: ml-platform
+spec:
+  target:
+    kind: Deployment
+    name: ml-model-api
+    namespace: ml-services
+
+  schedule:
+    # Specific holiday dates (highest priority)
+    - name: "Holiday mode"
+      dates: ["2025-12-25", "2026-01-01", "2026-07-04"]
+      replicas: 1
+      priority: 200
+      timezone: "Europe/London"
+
+    # Late night scale down on weekdays
+    - name: "Late night scale down"
+      days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+      timeStart: "22:00"
+      timeEnd: "06:00"
+      replicas: 1
+      priority: 100
+      timezone: "Europe/London"
+
+    # Weekend minimal
+    - name: "Weekend minimal"
+      days: [Saturday, Sunday]
+      replicas: 1
+      priority: 50
+      timezone: "Europe/London"
+
+  # Default for business hours
+  default:
+    replicas: 3
+
+  # Safety limits to prevent over-scaling
+  limits:
+    minReplicas: 1
+    maxReplicas: 10

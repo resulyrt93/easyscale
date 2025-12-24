@@ -1,0 +1,35 @@
+apiVersion: easyscale.io/v1
+kind: ScalingRule
+metadata:
+  name: peak-hours-scaling
+  labels:
+    app: inference-service
+    environment: production
+spec:
+  target:
+    kind: Deployment
+    name: inference-service-y
+    namespace: production
+
+  schedule:
+    # Peak hours have highest priority
+    - name: "Peak hours"
+      days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+      timeStart: "16:00"
+      timeEnd: "18:00"
+      replicas: 5
+      priority: 100
+      timezone: "America/New_York"
+
+    # Business hours baseline
+    - name: "Business hours baseline"
+      days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+      timeStart: "09:00"
+      timeEnd: "18:00"
+      replicas: 3
+      priority: 50
+      timezone: "America/New_York"
+
+  # Outside business hours
+  default:
+    replicas: 1

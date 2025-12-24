@@ -1,0 +1,22 @@
+apiVersion: easyscale.io/v1
+kind: ScalingRule
+metadata:
+  name: inference-weekend-scale
+  labels:
+    app: inference-service
+    environment: production
+spec:
+  target:
+    kind: Deployment
+    name: inference-service-x
+    namespace: default
+
+  schedule:
+    - name: "Weekend scale down"
+      days: [Saturday, Sunday]
+      replicas: 2
+      timezone: "UTC"
+
+  # When no rules match, use this default
+  default:
+    replicas: 5

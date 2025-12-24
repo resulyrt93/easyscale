@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "easyscale"
+version = "0.1.0"
+description = "A simple Kubernetes HPA scaling manager with time-based rules"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+license = "MIT"
+homepage = "https://github.com/yourusername/easyscale"
+keywords = ["kubernetes", "scaling", "hpa", "devops"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pydantic = "^2.0"
+pyyaml = "^6.0"
+kubernetes = "^31.0.0"
+pytz = "^2024.1"
+click = "^8.1.7"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-cov = "^6.0.0"
+pytest-asyncio = "^0.24.0"
+ruff = "^0.8.0"
+mypy = "^1.13.0"
+types-pyyaml = "^6.0.0"
+types-pytz = "^2024.1.0"
+
+[tool.poetry.scripts]
+easyscale = "easyscale.__main__:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=easyscale --cov-report=term-missing"
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true

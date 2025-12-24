@@ -1,5 +1,17 @@
 # EasyScale
 
+<div align="center">
+  <a href="https://nextjs.org">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://co-datazone-public.s3.amazonaws.com/media/easyscale-logo.png">
+      <img alt="easyscalelogo" src="https://co-datazone-public.s3.amazonaws.com/media/easyscale-logo.png" height="256">
+    </picture>
+  </a>
+  <h1>EasyScale</h1>
+
+</div>
+
+
 > Simple Kubernetes HPA scaling manager with time-based rules
 
 EasyScale is a lightweight, easy-to-configure tool for managing Kubernetes workload scaling based on time schedules. Perfect for predictable workloads that need different capacity at different times.

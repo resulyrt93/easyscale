@@ -87,11 +87,13 @@ kubectl apply -f weekend-scale.yaml
 ## 🏗️ Architecture
 
 EasyScale runs as a Kubernetes daemon that:
-1. Loads ScalingRule resources from your cluster
+1. Loads ScalingRule custom resources from your cluster via CRD
 2. Evaluates rules every 60 seconds (configurable)
 3. Scales Deployments/StatefulSets when needed
 4. Enforces cooldown periods to prevent thrashing
 5. Logs all scaling decisions and operations
+
+Complete Kubernetes manifests (CRD, RBAC, Deployment) are available in the `/deploy/kubernetes/` directory.
 
 See the [Architecture Documentation](https://easyscale.readthedocs.io/en/latest/architecture.html) for details.
 
@@ -120,18 +122,16 @@ python -m easyscale --rules-dir ./examples --kubeconfig --dry-run
 - ✅ 194 tests passing
 - ✅ 86% code coverage
 - ✅ Comprehensive documentation
-- 🚧 Kubernetes manifests in progress
+- ✅ Kubernetes manifests available
 - 🚧 Helm chart planned
 
 ## 📋 Roadmap
 
-- [x] Time-based scheduling
-- [x] Day-based scheduling
-- [x] Date-based scheduling
+- [x] Time-based, day-based, and date-based scheduling
 - [x] Priority resolution
 - [x] Configuration validation
 - [x] Comprehensive documentation
-- [ ] CRD-based rule management
+- [x] CRD-based rule management
 - [ ] Prometheus metrics
 - [ ] Datadog integration
 - [ ] Webhook notifications
